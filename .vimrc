@@ -47,11 +47,13 @@ set smartindent
 set hlsearch
 set ignorecase
 set incsearch
-" set cc=120
+set cc=120
 set clipboard=unnamed
 set clipboard=unnamedplus
 set cursorline
 set encoding=utf-8
+set mouse=a
+set relativenumber
 
 "==============================================================================
 " Cscope Config
