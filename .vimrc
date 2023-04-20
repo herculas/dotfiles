@@ -7,7 +7,7 @@
 " Author: @wurahara
 
 " =====================================================================================================================
-"                                    Automatic Installation of vim-plug and Plugins
+" Automatic Installation of vim-plug and Plugins
 " =====================================================================================================================
 
 " Automatic installation of vim-plug if not installed
@@ -23,9 +23,9 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \| PlugInstall --sync | source $MYVIMRC
 \| endif
 
-" =====================================================================================================================
-"                                            Install Plugins via vim-plug
-" =====================================================================================================================
+" ======================================================================================================================
+" Plugin Registration
+" ======================================================================================================================
 
 call plug#begin('~/.vim/plugged')
 
@@ -36,55 +36,226 @@ call plug#begin('~/.vim/plugged')
 
 call plug#end()
 
-" =====================================================================================================================
-"                                                Color Theme Settings
-" =====================================================================================================================
+" ======================================================================================================================
+" Basic Settings
+" ======================================================================================================================
 
-let g:gruvbox_contrast_dark = 'medium'
-set bg=dark
-colorscheme gruvbox
+" string and file encoding for current buffer
+set encoding=utf-8
+set fileencodings=utf-8
 
-" =====================================================================================================================
-"                                                   Editor Settings
-" =====================================================================================================================
+" minimal number of lines to keep above/below the cursor
+set scrolloff=8
+set sidescrolloff=8
 
-set nu				                                                        " line numbers
-set ruler			                                                        " bottom info
+" show line numbers and relative numbers
+set number
+set relativenumber
+
+" highlight the current line
+set cursorline
+
+" draw the signcolumn, `yes` means always
+set signcolumn=yes
+
+" highlight column
+set colorcolumn=120
+
+" number of spaces that a <Tab> counts for while editing
+set tabstop=2
+set softtabstop=2
+
+" round indents to multiple of `shiftwidth`
+set shiftround
+set shiftwidth=2
+
+" use the appropriate number of spaces to insert a <Tab>
+set expandtab
+set smarttab
+
+" copy indents from current line when starting a new line
+"
+set autoindent
+set smartindent
+
+" ignore case in search patterns
+" but override `ignorecase` when search pattern containing uppercase characters
+set ignorecase
+set smartcase
+
+" cancel the highlighting of matched search patterns
+" show the pattern as it was typed so far, incremental searching
+set nohlsearch
+set incsearch
+
+" number of lines for command line interface
+set cmdheight=2
+
+" not wrap lines even if longer than the width of window
+set nowrap
+
+" allow keys move cursor left/right to move to the prev/next line
+set whichwrap=<,>,[,]
+
+" a buffer becomes hidden when it is abandoned
+set hidden
+
+" enable mouse control, `a` means support all modes
+set mouse=a
+
+" cancel backup files and swap files for the buffer
 set nobackup
 set nowritebackup
 set noswapfile
-set autoindent                                                        " automatic indent
-set tabstop=2                                                         " 4 spaces for tab
-set softtabstop=2
-set shiftwidth=2
-set expandtab
-set smarttab
-set smartindent
-set hlsearch                                                          " searching highlight
-set incsearch                                                         " intelligent instant searching
-set cc=120                                                            " color column at 120
+
+" swap file written to disk if nothing is typed in 300 ms
+" mapped sequence to complete waiting in 800 ms
+set updatetime=300
+set timeoutlen=800
+
+" splitted window below/right
+set splitbelow
+set splitright
+
+" options for INSERT mode completion:
+set completeopt=menu,menuone,noselect,noinsert
+
+" enable 24-bit RGB color in the terminal UI (TUI)
+set termguicolors
+
+" command-line completion operates in enhanced mode
+set wildmenu
+
+" maximum number of items shown in the popups
+set pumheight=10
+
+" always show the tabline
+set showtabline=2
+
+" cancel the display of modes, since we will use plugins
+set noshowmode
+
+" allow system clipboards
 set clipboard=unnamed
 set clipboard=unnamedplus
-set cursorline                                                        " current line highlight
-set encoding=utf-8
-set mouse=a                                                           " allow mouse clicking
-set relativenumber
-set cmdheight=2                                                       " give more space for display messages
-set wildmenu
+
+" backspace in INSERT mode
 set backspace=indent,eol,start
-set ignorecase
-set smartcase
-set hidden                                                            " TextEdit might fail if hidden is not set
-set signcolumn=yes
+
+" background accent
+set background=dark
 
 " =====================================================================================================================
-"                                          Vim Airline Tabline and Status
+" Set Cursor Shape
+" =====================================================================================================================
+
+if &term =~ "xterm"
+    " INSERT mode
+    let &t_SI = "\<Esc>[6 q" . "\<Esc>]12;blue\x7"
+    " REPLACE mode
+    let &t_SR = "\<Esc>[3 q" . "\<Esc>]12;black\x7"
+    " NORMAL mode
+    let &t_EI = "\<Esc>[2 q" . "\<Esc>]12;green\x7"
+endif
+
+" =====================================================================================================================
+" Leader Key Remapping
+" =====================================================================================================================
+
+let g:mapleader = "\<space>"
+
+" =====================================================================================================================
+" Shortcuts and Key Bindings
+" =====================================================================================================================
+
+" NORMAL & VISUAL: baby step (10 lines) and giant step (30 lines) scroll
+noremap <silent> <C-j> 10j
+noremap <silent> <C-k> 10k
+noremap <silent> <C-d> 30j
+noremap <silent> <C-u> 30k
+
+" NORMAL & VISUAL: swap `$` and `g_`, jump to tail without space
+noremap <silent> $ g_
+noremap <silent> g_ $
+
+" NORMAL: set wrappings
+nnoremap <silent><expr> j v:count==0 ? 'gj' : 'j'
+nnoremap <silent><expr> k v:count==0 ? 'gk' : 'k'
+
+" VISUAL: code indenting
+vnoremap <silent> < <gv
+vnoremap <silent> > >gv
+
+" VISUAL: move and text selection
+vnoremap <silent> J :move '>+1<CR>gv-gv
+vnoremap <silent> K :move '<-2<CR>gv-gv
+
+" VISUAL: copy
+vnoremap <silent> p _dp
+
+" magic searching
+noremap / /\v
+
+" NORMAL: cancel default `s` for window splitting
+nnoremap <silent> s ''
+
+" NORMAL: set `sv` and `sh` for window splitting vertically and horizontally
+nnoremap <silent> sh :sp<CR>
+nnoremap <silent> sv :vsp<CR>
+
+" NORMAL: close current/other window(s)
+nnoremap <silent> sc <C-w>c
+nnoremap <silent> so <C-w>o
+
+" NORMAL: switch between windows using <leader>
+nnoremap <silent> <leader>h <C-w>h
+nnoremap <silent> <leader>l <C-w>l
+nnoremap <silent> <leader>k <C-w>k
+nnoremap <silent> <leader>j <C-w>j
+
+" NORMAL: window resize in baby step
+nnoremap <silent> <C-Left> :vertical resize -2<CR>
+nnoremap <silent> <C-right> :vertical resize +2<CR>
+nnoremap <silent> <C-Down> :resize -2<CR>
+nnoremap <silent> <C-Up> :resize +2<CR>
+
+" NORMAL: window resize in giant step
+nnoremap <silent> s, :vertical resize -10<CR>
+nnoremap <silent> s. :vertical resize +10<CR>
+nnoremap <silent> sj :resize -10<CR>
+nnoremap <silent> sk : resize +10<CR>
+
+" NORMAL: window resize default
+nnoremap <silent> s= <C-W>=
+
+" NORMAL: split window for terminals
+nnoremap <silent> <leader>th :term ++close<CR>
+nnoremap <silent> <leader>tv :vert term ++close<CR>
+
+" TERMINAL: <Esc> for back to NORMAL mode in terminals
+tnoremap <silent> <Esc> <C-\><C-n>
+
+" TERMINAL: ??
+tnoremap <silent> <leader>h <C-\><C-N><C-w>h
+tnoremap <silent> <leader>l <C-\><C-N><C-w>l
+tnoremap <silent> <leader>j <C-\><C-N><C-w>j
+tnoremap <silent> <leader>k <C-\><C-N><C-w>k
+
+" =====================================================================================================================
+" Color Theme Settings
+" =====================================================================================================================
+
+let g:gruvbox_contrast_dark = 'medium'
+colorscheme gruvbox
+
+" =====================================================================================================================
+" Vim Airline Tabline and Status
 " =====================================================================================================================
 
 let g:airline#extensions#tabline#enabled = 1
 
 " =====================================================================================================================
-"                                                   Netrw Settings
+" Netrw Settings
 " =====================================================================================================================
 
 let g:netrw_browse_split = 4
@@ -93,7 +264,7 @@ let g:netrw_banner = 0
 let g:netrw_winsize = 25
 
 " =====================================================================================================================
-"                                                CoC Language Server
+" CoC Language Server
 " =====================================================================================================================
 
 " coc language server extensions
