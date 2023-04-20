@@ -7,7 +7,7 @@
 " Author: @wurahara
 
 " =====================================================================================================================
-" Automatic Installation of vim-plug and Plugins
+" Automatic Installation of Vim-plug and Plugins
 " =====================================================================================================================
 
 " Automatic installation of vim-plug if not installed
@@ -29,8 +29,9 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 
 call plug#begin('~/.vim/plugged')
 
-  Plug 'morhetz/gruvbox'                                              " color schemes
-  Plug 'vim-airline/vim-airline'                                      " status and tabline
+  Plug 'morhetz/gruvbox'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}                     " language server CoC, using relase branch
   Plug 'rhysd/vim-healthcheck'
 
@@ -146,22 +147,10 @@ set backspace=indent,eol,start
 set background=dark
 
 " =====================================================================================================================
-" Set Cursor Shape
+" Other Settings
 " =====================================================================================================================
 
-if &term =~ "xterm"
-    " INSERT mode
-    let &t_SI = "\<Esc>[6 q" . "\<Esc>]12;blue\x7"
-    " REPLACE mode
-    let &t_SR = "\<Esc>[3 q" . "\<Esc>]12;black\x7"
-    " NORMAL mode
-    let &t_EI = "\<Esc>[2 q" . "\<Esc>]12;green\x7"
-endif
-
-" =====================================================================================================================
 " Leader Key Remapping
-" =====================================================================================================================
-
 let g:mapleader = "\<space>"
 
 " =====================================================================================================================
@@ -193,7 +182,7 @@ vnoremap <silent> K :move '<-2<CR>gv-gv
 " VISUAL: copy
 vnoremap <silent> p _dp
 
-" magic searching
+" NORMAL & VISUAL: magic searching
 noremap / /\v
 
 " NORMAL: cancel default `s` for window splitting
@@ -242,17 +231,42 @@ tnoremap <silent> <leader>j <C-\><C-N><C-w>j
 tnoremap <silent> <leader>k <C-\><C-N><C-w>k
 
 " =====================================================================================================================
-" Color Theme Settings
+" Color Theme & Tabline
 " =====================================================================================================================
 
-let g:gruvbox_contrast_dark = 'medium'
 colorscheme gruvbox
-
-" =====================================================================================================================
-" Vim Airline Tabline and Status
-" =====================================================================================================================
+let g:airline_theme = 'gruvbox'
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
 
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''
+let g:airline#extensions#tabline#formatter = 'default'
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = '☰'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = '∄'
+let g:airline_symbols.whitespace = 'Ξ'
 
 " =====================================================================================================================
 " Netrw Settings
@@ -395,8 +409,8 @@ nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
 " search workspace symbols
 nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 " do default action for next item
-nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 " do default action for previous item
-nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " resume latest coc list
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
