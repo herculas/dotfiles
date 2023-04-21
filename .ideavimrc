@@ -1,0 +1,109 @@
+" ======================================================================================================================
+" Basic Settings
+" ======================================================================================================================
+
+" Set the encoding to UTF-8
+set encoding=utf-8
+set fileencoding=utf-8
+
+" minimal number of screen lines to keep above and below the cursor
+set scrolloff=8
+set sidescrolloff=8
+
+" show line numbers and relative numbers
+set number
+set relativenumber
+
+" highlight the current line
+set cursorline
+
+" draw the sign column, `yes` means always
+set signcolumn=yes
+
+" round indents to multiple of `shiftwidth`
+set shiftround
+set shiftwidth=2
+
+" ignore case in search patterns
+set ignorecase
+set smartcase
+
+" cancel the highlighting of matched search patterns
+" show the pattern as it was typed so far, incremental searching
+set nohlsearch
+set incsearch
+
+" not wrap lines
+set nowrap
+
+" allow keys move the cursor to the start or end of a line
+set whichwrap+=<,>,h,l,[,]
+
+" a buffer becomes hidden when it is abandoned
+set hidden
+
+" enable mouse support
+set mouse=a
+
+" cancel backup files and swap files for the buffer
+set nobackup
+set nowritebackup
+set noswapfile
+
+" swap file written to disk if nothing is typed in 300 ms
+set updatetime=300
+
+" mapped sequence to complete waiting in 800 ms
+set timeoutlen=800
+
+" splitted window below/right
+set splitbelow
+set splitright
+
+" options for INSERT mode completion
+set completeopt=menuone,noselect,menu,noinsert
+
+" allow system clipboard and IDE clipboard
+set clipboard=unnamed
+set clipboard=unnamedplus
+set clipboard+=ideaput
+
+" backspace in INSERT mode
+set backspace=indent,eol,start
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+" ======================================================================================================================
+" Other Settings
+" ======================================================================================================================
+
+" set the leader key
+let g:mapleader = "\<space>"
+
+" ======================================================================================================================
+" Shortcuts and Key Bindings
+" ======================================================================================================================
+
+" NORMAL & VISUAL: baby step (10 lines) and giant step (100 lines) scroll
+nnoremap <silent> <C-j> 10j
+nnoremap <silent> <C-k> 10k
+nnoremap <silent> <C-d> 30j
+nnoremap <silent> <C-u> 30k
+
+" NORMAL & VISUAL: swap `$` and `g_`, jump to tail without space
+nnoremap <silent> $ g_
+nnoremap <silent> g_ $
+
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+"" Map \r to the Reformat Code action
+"map \r <Action>(ReformatCode)
+
+"" Map <leader>d to start debug
+"map <leader>d <Action>(Debug)
+
+"" Map \b to toggle the breakpoint on the current line
+"map \b <Action>(ToggleLineBreakpoint)
+
+
+" Find more examples here: https://jb.gg/share-ideavimrc
