@@ -1,3 +1,20 @@
+"
+"
+" ██╗  ██████╗   ███████╗   █████╗   ██╗   ██╗  ██╗  ███╗   ███╗
+" ██║  ██╔══██╗  ██╔════╝  ██╔══██╗  ██║   ██║  ██║  ████╗ ████║
+" ██║  ██║  ██║  █████╗    ███████║  ██║   ██║  ██║  ██╔████╔██║
+" ██║  ██║  ██║  ██╔══╝    ██╔══██║  ╚██╗ ██╔╝  ██║  ██║╚██╔╝██║
+" ██║  ██████╔╝  ███████╗  ██║  ██║   ╚████╔╝   ██║  ██║ ╚═╝ ██║
+" ╚═╝  ╚═════╝   ╚══════╝  ╚═╝  ╚═╝    ╚═══╝    ╚═╝  ╚═╝     ╚═╝
+"
+"
+" AUTHOR: Crumble_Jon
+" EMAIL: ruisong20@gmail.com
+" GITHUB: github.com/wurahara
+"
+" Find more examples here: https://jb.gg/share-ideavimrc
+"
+"
 " ======================================================================================================================
 " Basic Settings
 " ======================================================================================================================
@@ -56,12 +73,12 @@ set updatetime=300
 " mapped sequence to complete waiting in 800 ms
 set timeoutlen=800
 
-" splitted window below/right
+" split window below/right
 set splitbelow
 set splitright
 
 " options for INSERT mode completion
-set completeopt=menuone,noselect,menu,noinsert
+set completeopt=menu,menuone,noselect,noinsert
 
 " allow system clipboard and IDE clipboard
 set clipboard=unnamed
@@ -81,6 +98,14 @@ map Q gq
 " set the leader key
 let g:mapleader = "\<space>"
 
+" configure conflicting keys
+sethandler <C-D> a:vim
+sethandler <C-H> a:vim
+sethandler <C-J> a:vim
+sethandler <C-K> a:vim
+sethandler <C-L> a:vim
+sethandler <C-R> a:vim
+
 " ======================================================================================================================
 " Shortcuts and Key Bindings
 " ======================================================================================================================
@@ -95,15 +120,50 @@ nnoremap <silent> <C-u> 30k
 nnoremap <silent> $ g_
 nnoremap <silent> g_ $
 
-"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
-"" Map \r to the Reformat Code action
-"map \r <Action>(ReformatCode)
+" NORMAL: set wrapping
+nnoremap <silent><expr> j v:count ? 'j' : 'gj'
+nnoremap <silent><expr> k v:count ? 'k' : 'gk'
 
-"" Map <leader>d to start debug
-"map <leader>d <Action>(Debug)
+" VISUAL: code indenting
+vnoremap < <gv
+vnoremap > >gv
 
-"" Map \b to toggle the breakpoint on the current line
-"map \b <Action>(ToggleLineBreakpoint)
+" VISUAL: copy
+vnoremap <silent> p "_dP
 
+" NORMAL & VISUAL: magic searching
+noremap / /\v
 
-" Find more examples here: https://jb.gg/share-ideavimrc
+" NORMAL: cancel default `s` for window splitting
+nnoremap s <Nop>
+
+" NORMAL: set `sv` and `sh` for window splitting vertically and horizontally
+nnoremap <silent> sh :sp<CR>
+nnoremap <silent> sv :vsp<CR>
+
+" NORMAL: close current/other window(s)
+nnoremap <silent> sc <C-w>c
+nnoremap <silent> so <C-w>o
+
+" NORMAL: switch between windows using <leader>
+nnoremap <silent> <leader>h <C-w>h
+nnoremap <silent> <leader>j <C-w>j
+nnoremap <silent> <leader>k <C-w>k
+nnoremap <silent> <leader>l <C-w>l
+
+" NORMAL: window resize
+nnoremap <silent> <leader><Up> <Action>(StretchSplitToTop)
+nnoremap <silent> <leader><Down> <Action>(StretchSplitToBottom)
+nnoremap <silent> <leader><Left> <Action>(StretchSplitToLeft)
+nnoremap <silent> <leader><Right> <Action>(StretchSplitToRight)
+
+" NORMAL: window default size
+nnoremap <silent> <leader>= <Action>(MaximizeEditorInSplit)
+
+" NORMAL: switch between tabs
+nnoremap <silent> <C-h> gT
+nnoremap <silent> <C-l> gt
+
+" TODO: hint traverse
+" TODO: NERDTree operations
+" TODO: actions for activities
