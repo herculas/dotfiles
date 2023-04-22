@@ -88,6 +88,9 @@ set clipboard+=ideaput
 " backspace in INSERT mode
 set backspace=indent,eol,start
 
+" enable NERDTree emulator
+set NERDTree
+
 " Don't use Ex mode, use Q for formatting.
 map Q gq
 
@@ -99,12 +102,16 @@ map Q gq
 let g:mapleader = "\<space>"
 
 " configure conflicting keys
-sethandler <C-D> a:vim
 sethandler <C-H> a:vim
 sethandler <C-J> a:vim
 sethandler <C-K> a:vim
 sethandler <C-L> a:vim
+
+sethandler <C-D> a:vim
 sethandler <C-R> a:vim
+sethandler <C-M> a:vim
+sethandler <C-N> a:vim
+sethandler <C-P> a:vim
 
 " ======================================================================================================================
 " Shortcuts and Key Bindings
@@ -164,6 +171,11 @@ nnoremap <silent> <leader>= <Action>(MaximizeEditorInSplit)
 nnoremap <silent> <C-h> gT
 nnoremap <silent> <C-l> gt
 
-" TODO: hint traverse
-" TODO: NERDTree operations
+" ======================================================================================================================
+" NERDTree Settings
+" ======================================================================================================================
+
+nnoremap <silent> <leader>nn :NERDTreeToggle<CR>
+nnoremap <silent> <leader>nf :NERDTreeFocus<CR>
+
 " TODO: actions for activities
